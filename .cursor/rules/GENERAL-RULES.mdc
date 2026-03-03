@@ -1,0 +1,134 @@
+---
+description: Пример общих правил проекта
+globs: 
+alwaysApply: false
+---
+# Project
+
+
+## Key Principles
+
+
+## Project Structure
+
+Structure the project files as follows:
+
+<!-- можно задавать самому или спроектировать в режиме плана с агентом, поставив ему задачу проектирования архитектуры -->
+
+```plaintext
+
+
+```
+
+## Tech Stack
+- Python 3.11+
+
+## Tech Stack
+- **Language:** Python 3.11+
+- **Data:** pandas, numpy
+- **Visualization:** plotly, matplotlib, seaborn
+- **Modeling:** mmm_tools, statsmodels, scikit-learn, scipy, prophet, optuna
+- **Environment:** uv
+- **Notebooks:** Jupyter
+- **Testing:** pytest
+- **Config:** PyYAML
+
+
+## Code Style
+- **PEP 8** strictly, max line length 88 (Black standard)
+- **Type hints** required on all function signatures
+- **Docstrings:** Google style on all public functions
+- **Logging:** Python `logging` module, NEVER `print()` in `mmm_tools/`
+- **Imports:** isort for sorting
+
+
+## Architecture & Data Flow
+```
+raw data → ingestion → validation → preprocessing →
+feature engineering (media transforms + seasonality) →
+EDA → model training → evaluation & diagnostics →
+decomposition → optimization / forecasting → reporting
+```
+
+## Critical Constraints
+- **NEVER modify files in `data/raw/`** — original data is read-only
+- **All experiments must be reproducible** — set random seeds from config.yaml everywhere
+- **No new dependencies without asking first**
+- **Every model and analysis step must be logged and traceable**
+
+
+## Naming Conventions
+- Variables and functions: `snake_case`
+- Classes: `PascalCase`
+- Constants: `UPPER_SNAKE_CASE`
+- Private methods/attributes: prefix with `_`
+- DataFrame variables: suffix with `_df` (e.g., `sales_df`)
+- Model variables: prefix `model_` + timestamp `YYYY_MM_DD_HH_MM`
+- Saved data files: include timestamp `YYYY_MM_DD_HH_MM` in filename
+
+
+## Functions
+- One responsibility per function, keep under 90 lines
+- All public functions must have Google-style docstring:
+  ```python
+  def geometric_adstock(
+      x: np.ndarray, decay: float
+  ) -> np.ndarray:
+      """Apply geometric adstock transformation.
+
+      Args:
+          x: Raw media spend or impressions array.
+          decay: Decay rate between 0 and 1.
+
+      Returns:
+          Transformed array with carryover effect applied.
+      """
+  ```
+
+
+## Error Handling
+- Validate input data shape and types at ingestion
+- Use explicit exceptions with descriptive messages
+- Never use bare `except:`
+
+## Workflow
+- Read `TASKS.md` at the start of each session
+- Work on the current phase only; ask before moving to next phase
+- After completing a task, mark it `[x]` in TASKS.md
+- Pipeline steps are modular and independently runnable
+
+
+
+## Testing
+
+
+## Performance Optimization
+
+
+## Git Usage
+
+- Use clear and descriptive commit messages.
+- Follow a consistent branching strategy (e.g., Git Flow).
+
+## Documentation and Comments
+
+- Maintain clear README with setup instructions and requirements.
+- Use docstrings for classes, methods, and functions.
+- Add inline comments only for complex logic explaining "why" not "what".
+- Document API endpoints and data models.
+
+
+## Development Workflow
+
+- Use virtual environments for dependency management.
+- Implement PEP 8 checks.
+- Run automated tests.
+- Follow semantic versioning.
+
+## CI/CD
+
+- Use GitHub Actions or similar for:
+  - Code linting
+  - Running tests
+  - Automated deployments
+  - Security checks
